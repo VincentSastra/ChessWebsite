@@ -6,7 +6,6 @@
 
 var app = require('../app');
 var debug = require('debug')('filetransferserver:server');
-var http = require('http');
 
 /**
  * Get port from environment and store in Express.
@@ -16,10 +15,19 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS Server
  */
 
-var server = http.createServer(app);
+// certification
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('./key.pem', 'utf8'),
+  cert: fs.readFileSync('./cert.pem', 'utf8')
+};
+
+var server = https.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.

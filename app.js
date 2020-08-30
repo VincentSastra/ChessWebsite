@@ -10,12 +10,31 @@ const usersRouter = require('./routes/users');
 
 const app = express();
 
+/**
+ * Configure Database
+ * I am currently using AtlasDB which I will access through Mongoose
+ */
 const mongoose = require('mongoose');
 const db = require('./config/keys').MongoURI;
 
 mongoose.connect(db, {useNewUrlParser: true})
-  .then(() => console.log('database connected'))
+  .then(() => console.log('Database Connected'))
   .catch(err => console.log(err))
+
+/**
+ * Configure Passport
+ * Passport is used for user login and authentication
+ */
+const passport = require('passport');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const Account = require('./models/account');
+passport.use(Account.createStrategy());
+
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
