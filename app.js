@@ -4,11 +4,25 @@ const helmet = require('helmet');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require("express-session");
+const bodyParser = require("body-parser");
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+
+/**
+ * Sessions and bodyParser for user authentication
+ */
+const sessionSecret = require("./config/cookies")
+
+app.use(session({
+  secret: sessionSecret.secret,
+  cookie: {secure:true}
+}));
+
+app.use(bodyParser.urlencoded({extended: false}));
 
 /**
  * Configure Database
@@ -26,12 +40,13 @@ mongoose.connect(db, {useNewUrlParser: true})
  * Passport is used for user login and authentication
  */
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 const Account = require('./models/account');
-passport.use(Account.createStrategy());
+passport.use(new LocalStrategy(Account.authenticate()));
 
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
