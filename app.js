@@ -51,20 +51,35 @@ passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+/**
+ * View engine setup and add all directory in views
+ */
+app.set('views', [path.join(__dirname, 'views'),
+                  path.join(__dirname, 'views/authentication')]);
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(helmet());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+ * Configuring Helmet
+ */
+app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"]
+      }
+    })
+)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.use(express.static(path.join(__dirname, 'client/build')));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
