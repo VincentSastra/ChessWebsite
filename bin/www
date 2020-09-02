@@ -30,6 +30,19 @@ const options = {
 var server = https.createServer(options, app);
 
 /**
+ * Websocket for Chess matches
+ */
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ server });
+
+// Testing to hear data
+wss.on('connection', function connection(ws) {
+  wss.on('message', function incoming(data) {
+    console.log(data);
+  });
+});
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 
