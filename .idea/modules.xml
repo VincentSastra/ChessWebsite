@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FileTransferServer.iml" filepath="$PROJECT_DIR$/FileTransferServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ChessWebsite.iml" filepath="$PROJECT_DIR$/ChessWebsite.iml" />
     </modules>
   </component>
 </project>
