@@ -20,7 +20,7 @@ router.get('/login', (req, res) => {
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/users/login' }),
     function(req, res) {
-      res.redirect('/users/');
+      res.redirect('https://localhost:3001');
     });
 /**
  * User registration
