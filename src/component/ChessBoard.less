@@ -1,0 +1,50 @@
+@import "../App.less";
+@tileLength: 80px;
+
+.LightTile{
+    background-color: white;
+    border: none;
+    align-content: center;
+    width: @tileLength;
+    height: @tileLength;
+}
+
+.DarkTile{
+    background-color: black;
+    border: none;
+    align-content: center;
+    child-align: middle;
+    width: @tileLength;
+    height: @tileLength;
+}
+
+.LightTile:active{
+    background-color: yellow;
+    border: none;
+    align-content: center;
+    width: @tileLength;
+    height: @tileLength;
+}
+
+.DarkTile:active{
+    background-color: yellow;
+    border: none;
+    align-content: center;
+    child-align: middle;
+    width: @tileLength;
+    height: @tileLength;
+}
+
+.LightTilePiece{
+    -webkit-filter: drop-shadow(1px 1px 0 black)
+    drop-shadow(-1px -1px 0 black);
+    filter: drop-shadow(1px 1px 0 black)
+    drop-shadow(-1px -1px 0 black);
+}
+
+.DarkTilePiece{
+    -webkit-filter: drop-shadow(1px 1px 0 white)
+    drop-shadow(-1px -1px 0 white);
+    filter: drop-shadow(1px 1px 0 white)
+    drop-shadow(-1px -1px 0 white);
+}

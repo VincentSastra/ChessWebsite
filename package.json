@@ -20,7 +20,7 @@
     "antd": "^4.6.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
-    "craco-less": "^1.17.0",
+    "craco-antd": "^1.18.1",
     "debug": "~2.6.9",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
