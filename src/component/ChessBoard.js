@@ -9,14 +9,19 @@ class ChessBoard extends Component {
     constructor(props) {
         super(props);
 
-        this.state = new ChessLogic();
+        this.ChessLogic = new ChessLogic();
+        this.state = {
+            Tiles: this.ChessLogic.Tiles,
+        }
 
-        this.handleClick = this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this)
     }
 
     handleClick(tile) {
-        tile.piece = "blackPawn"
+
+        this.ChessLogic.handleClick(tile)
         this.forceUpdate()
+
     }
 
     render() {
