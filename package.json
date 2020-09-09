@@ -20,7 +20,8 @@
       "indent": [
         2,
         4
-      ]
+      ],
+      "new-cap": "off"
     }
   },
   "dependencies": {
