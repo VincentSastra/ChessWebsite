@@ -1,289 +1,264 @@
-
 class ChessLogic {
     constructor() {
-        this.Tiles = generateChessBoard()
-        this.selected = emptyTile()
-        this.turn = "white"
+        this.Tiles = generateChessBoard();
+        this.selected = emptyTile();
+        this.turn = 'white';
+        this.webSocket = new WebSocket('ws://localhost:3000');
     }
 
     handleClick(tile) {
-
-        if(this.selected.piece === "empty") {
-            if(this.turn === tile.getColor())
-            this.highlight(tile)
-        } else {
-            if (this.movePiece(tile)) this.turn = (this.turn === "white") ? "black" : "white"
+        if (this.selected.piece === 'empty') {
+            if (this.turn === tile.getColor()) {
+                this.highlight(tile);
+            }
+        } else if (this.movePiece(tile)) {
+            this.turn = (this.turn === 'white') ? 'black' : 'white';
         }
-
     }
 
     movePiece(tile) {
+        let ret = false;
 
-        let ret = false
-
-        if(tile.type === "highlightTile") {
-            tile.piece = this.selected.piece
-            this.selected.piece = "empty"
-            ret = true
+        if (tile.type === 'highlightTile') {
+            tile.piece = this.selected.piece;
+            this.selected.piece = 'empty';
+            ret = true;
         }
-        this.selected = emptyTile()
-        this.dehighlight()
+        this.selected = emptyTile();
+        this.deHighlight();
 
-        return ret
+        return ret;
     }
 
     highlight(tile) {
+        console.log('highlighting ' + tile);
+        const color = tile.piece.substring(0, 5);
+        const piece = tile.piece.substring(5);
+        const TileSet = this.Tiles;
 
-        console.log("highlighting " + tile)
-        const color = tile.piece.substring(0, 5)
-        const piece = tile.piece.substring(5)
-        const TileSet = this.Tiles
+        this.selected = tile;
 
-        this.selected = tile
+        const {row, col} = tile;
 
-        const { row, col } = tile
+        switch (piece) {
+        case ('Queen'):
 
-        switch(piece) {
+            for (let i = 0; i < 5; i++) {
+                const colCounter = (i < 1.5) ? 1 : -1;
+                let curCol = col + colCounter;
 
-            case("Queen"):
+                const rowCounter = (i % 2) ? 1 : -1;
+                let curRow = row + rowCounter;
 
-                for (let i = 0; i < 5; i++) {
-
-                    let colCounter = (i < 1.5) ? 1 : -1
-                    let curCol = col + colCounter
-
-                    let rowCounter = (i % 2) ? 1 : -1
-                    let curRow = row + rowCounter
-
-                    // processTile highlights the tile if the piece can go there
-                    // and return true if there is a piece there
-                    while(this.processTile(curRow, curCol)) {
-                        curCol += colCounter
-                        curRow += rowCounter
-                    }
-
+                // processTile highlights the tile if the piece can go there
+                // and return true if there is a piece there
+                while (this.processTile(curRow, curCol)) {
+                    curCol += colCounter;
+                    curRow += rowCounter;
                 }
+            }
 
-            case("Rook"):
+            // no breaks so it also acts as a rook
+            // eslint-disable-next-line no-fallthrough
+        case ('Rook'): {
+            const rowArr = [-1, 0, 0, 1];
+            const colArr = [0, -1, 1, 0];
 
-                let rowArr = [-1, 0, 0, 1]
-                let colArr = [0, -1, 1, 0]
+            for (let i = 0; i < 4; i++) {
+                let curRow = rowArr[i] + row;
+                let curCol = colArr[i] + col;
 
-                for(let i = 0; i < 4; i++) {
-
-                    let curRow = rowArr[i] + row
-                    let curCol = colArr[i] + col
-
-                    // processTile highlights the tile if the piece can go there
-                    // and return true if there is a piece there
-                    while (this.processTile(curRow, curCol, color)) {
-
-                        curRow += rowArr[i]
-                        curCol += colArr[i]
-
-                    }
+                // processTile highlights the tile if the piece can go there
+                // and return true if there is a piece there
+                while (this.processTile(curRow, curCol, color)) {
+                    curRow += rowArr[i];
+                    curCol += colArr[i];
                 }
-                break
+            }
+            break;
+        }
+        case ('Knight'): {
+            for (let curRow = 1; curRow < 3; curRow++) {
+                const curCol = 3 - curRow;
 
-            case("Knight"):
+                // processTile highlights the tile if the piece can go there
+                // and return true if there is a piece there
+                this.processTile(row + curRow, col + curCol, color);
+                this.processTile(row + curRow, col - curCol, color);
+                this.processTile(row - curRow, col - curCol, color);
+                this.processTile(row - curRow, col + curCol, color);
+            }
+            break;
+        }
+        case ('Bishop'): {
+            for (let i = 0; i < 5; i++) {
+                const colCounter = (i < 1.5) ? 1 : -1;
+                let curCol = col + colCounter;
 
-                for (let curRow = 1; curRow < 3; curRow++) {
+                const rowCounter = (i % 2) ? 1 : -1;
+                let curRow = row + rowCounter;
 
-                    let curCol = 3 - curRow
-
-                    // processTile highlights the tile if the piece can go there
-                    // and return true if there is a piece there
-                    this.processTile(row + curRow, col + curCol, color)
-                    this.processTile(row + curRow, col - curCol, color)
-                    this.processTile(row - curRow, col - curCol, color)
-                    this.processTile(row - curRow, col + curCol, color)
-
+                // processTile highlights the tile if the piece can go there
+                // and return true if there is a piece there
+                while (this.processTile(curRow, curCol, color)) {
+                    curCol += colCounter;
+                    curRow += rowCounter;
                 }
-                break
+            }
 
-            case("Bishop"):
-
-                for (let i = 0; i < 5; i++) {
-
-                    let colCounter = (i < 1.5) ? 1 : -1
-                    let curCol = col + colCounter
-
-                    let rowCounter = (i % 2) ? 1 : -1
-                    let curRow = row + rowCounter
-
-                    // processTile highlights the tile if the piece can go there
-                    // and return true if there is a piece there
-                    while(this.processTile(curRow, curCol, color)) {
-                        curCol += colCounter
-                        curRow += rowCounter
-                    }
-
+            break;
+        }
+        case ('King'): {
+            for (let i = -1; i < 2; i++) {
+                for (let j = -1; j < 2; j++) {
+                    this.processTile(row + i, col + j, color);
                 }
+            }
 
-                break
+            break;
+        }
+        case ('Pawn'): {
+            const distance = (row === 1 || row === 6) ? 3 : 2;
+            const direction = color === 'white' ? 1 : -1;
 
-            case("King"):
+            for (let i = 1; i < distance; i++) {
+                const curTile = TileSet[row + i * direction][col];
 
-                for (let i = -1; i < 2; i++) {
-                    for (let j = -1; j < 2; j++) {
-                        this.processTile(row + i, col + j, color)
-                    }
+                if (curTile.piece === 'empty') {
+                    curTile.highlight();
+                } else {
+                    break;
                 }
+            }
 
-                break
+            this.highlightIfEnemy(row + direction, col + 1, color);
+            this.highlightIfEnemy(row + direction, col - 1, color);
 
-            case("Pawn"):
-                const distance = (row === 1 || row === 6) ?  3 : 2
-                const direction = color === "white" ? 1 : -1
-
-                for(let i = 1; i < distance; i++) {
-
-                    const curTile = TileSet[row + i * direction][col]
-
-                    if(curTile.piece === "empty") {
-                        curTile.highlight()
-                    } else {
-                        break
-                    }
-
-                }
-
-                this.highlightIfEnemy(row + direction, col + 1, color)
-                this.highlightIfEnemy(row + direction, col - 1, color)
-
-                break
-
-            default:
-                break
-
+            break;
         }
 
+        default:
+            break;
+        }
     }
 
     processTile(row, col, color) {
+        if (row > 7 || row < 0 || col > 7 || col < 0) {
+            return false;
+        }
 
-        if(row > 7 || row < 0 || col > 7 || col < 0)
-            return false
+        const tile = this.Tiles[row][col];
 
-        const tile = this.Tiles[row][col]
-
-        if (tile.piece.substr(0,5) === "empty") {
-            tile.highlight()
-            return true
+        if (tile.piece.substr(0, 5) === 'empty') {
+            tile.highlight();
+            return true;
         } else {
-            if (tile.piece.substr(0, 5) !== color)
-                tile.highlight()
-            return false
+            if (tile.piece.substr(0, 5) !== color) {
+                tile.highlight();
+            }
+            return false;
         }
     }
 
     highlightIfEnemy(row, col, colour) {
-        if(row > -1 && row < 8 && col > -1 && col < 8) {
+        if (row > -1 && row < 8 && col > -1 && col < 8) {
+            const tile = this.Tiles[row][col];
 
-            const tile = this.Tiles[row][col]
-
-            if (tile.piece !== "empty" && tile.piece.substr(0, 5) !== colour)
-                tile.highlight()
-
+            if (tile.piece !== 'empty' && tile.piece.substr(0, 5) !== colour) {
+                tile.highlight();
+            }
         }
-
     }
 
-    dehighlight() {
-        console.log("reset")
+    deHighlight() {
+        console.log('reset');
 
-        this.Tiles.forEach(row =>
-            row.forEach(tile =>
-                tile.dehighlight()
-            )
-        )
+        this.Tiles.forEach((row) =>
+            row.forEach((tile) =>
+                tile.dehighlight(),
+            ),
+        );
     }
-
 }
 
 function generateChessBoard() {
-
-    let tiles = []
+    const tiles = [];
 
     for (let i = 0; i < 8; i++) {
-        const curRow = []
+        const curRow = [];
         for (let j = 0; j < 8; j++) {
-            curRow.push(new TileInfo(i, j))
+            curRow.push(new TileInfo(i, j));
         }
-        tiles.push(curRow)
+        tiles.push(curRow);
     }
 
-    return tiles
-
+    return tiles;
 }
 
 function emptyTile() {
-    return new TileInfo(4, 4)
+    return new TileInfo(4, 4);
 }
 
 class TileInfo {
-
     constructor(rowNum, colNum) {
         this.row = rowNum;
         this.col = colNum;
-        this.type = ((rowNum + colNum) % 2) ? "LightTile" : "DarkTile";
+        this.type = ((rowNum + colNum) % 2) ? 'LightTile' : 'DarkTile';
 
         if (rowNum < 1) {
             switch (Math.abs(7 - 2 * colNum)) {
-                case 7:
-                    this.piece = "whiteRook"
-                    break
-                case 5:
-                    this.piece = "whiteKnight"
-                    break
-                case 3:
-                    this.piece = "whiteBishop"
-                    break
-                case 1:
-                    this.piece = colNum === 4 ? "whiteKing" : "whiteQueen"
-                    break
-                default:
-                    this.piece = "empty"
+            case 7:
+                this.piece = 'whiteRook';
+                break;
+            case 5:
+                this.piece = 'whiteKnight';
+                break;
+            case 3:
+                this.piece = 'whiteBishop';
+                break;
+            case 1:
+                this.piece = colNum === 4 ? 'whiteKing' : 'whiteQueen';
+                break;
+            default:
+                this.piece = 'empty';
             }
         } else if (rowNum < 2) {
-            this.piece = "whitePawn"
+            this.piece = 'whitePawn';
         } else if (rowNum < 6) {
-            this.piece = "empty"
+            this.piece = 'empty';
         } else if (rowNum < 7) {
-            this.piece = "blackPawn"
+            this.piece = 'blackPawn';
         } else if (rowNum < 8) {
             switch (Math.abs(7 - 2 * colNum)) {
-                case 7:
-                    this.piece = "blackRook"
-                    break
-                case 5:
-                    this.piece = "blackKnight"
-                    break
-                case 3:
-                    this.piece = "blackBishop"
-                    break
-                case 1:
-                    this.piece = colNum === 4 ? "blackKing" : "blackQueen"
-                    break
-                default:
-                    this.piece = "empty"
+            case 7:
+                this.piece = 'blackRook';
+                break;
+            case 5:
+                this.piece = 'blackKnight';
+                break;
+            case 3:
+                this.piece = 'blackBishop';
+                break;
+            case 1:
+                this.piece = colNum === 4 ? 'blackKing' : 'blackQueen';
+                break;
+            default:
+                this.piece = 'empty';
             }
         }
-
     }
 
     getColor() {
-        return this.piece.substr(0, 5)
+        return this.piece.substr(0, 5);
     }
 
     highlight() {
-        this.type="highlightTile"
+        this.type='highlightTile';
     }
 
     dehighlight() {
-        this.type = ((this.row + this.col) % 2) ? "LightTile" : "DarkTile"
+        this.type = ((this.row + this.col) % 2) ? 'LightTile' : 'DarkTile';
     }
-
 }
 
 export default ChessLogic;
