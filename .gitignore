@@ -1,5 +1,7 @@
 # Project exclude paths
 /node_modules/
-/config/*
+/server/config/*
 *.pem
-.env
+client/.env
+/server/node_modules/
+/client/node_modules/
