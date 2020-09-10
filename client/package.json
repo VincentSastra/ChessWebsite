@@ -32,7 +32,8 @@
     "craco-antd": "^1.18.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "socket.io-client": "^2.3.0"
   },
   "browserslist": {
     "production": [

@@ -1,9 +1,15 @@
+const io = require('socket.io-client');
+
 class ChessLogic {
     constructor() {
         this.Tiles = generateChessBoard();
         this.selected = emptyTile();
         this.turn = 'white';
-        this.webSocket = new WebSocket('ws://localhost:3000');
+        this.socket = io('https://localhost:3000');
+
+        this.socket.on('message', (data) => {
+            console.log(data);
+        });
     }
 
     handleClick(tile) {

@@ -35,7 +35,12 @@ const server = https.createServer(options, app);
 const io = require('socket.io')(server);
 
 io.on('connect', () => {
-    io.send('hello from server!');
+    console.log('a user has connected!');
+    io.emit('message', 'hello from server!');
+});
+
+io.on('disconnect', () => {
+    console.log('a user has disconnected!');
 });
 
 /**
