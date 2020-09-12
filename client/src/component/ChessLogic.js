@@ -16,8 +16,6 @@ class ChessLogic {
     const color = tile.getColor();
     const piece = tile.getPiece();
 
-    this.selected = tile;
-
     const validMoves = [];
 
     switch (piece) {
@@ -146,7 +144,7 @@ class ChessLogic {
     if (row > -1 && row < 8 && col > -1 && col < 8) {
       const tile = this.Tiles[row][col];
 
-      if (tile.piece !== 'empty' && tile.getColor() !== colour) {
+      if (tile.getColor() !== 'empty' && tile.getColor() !== colour) {
         validMoves.push(tile);
       }
     }

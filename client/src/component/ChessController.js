@@ -6,42 +6,33 @@ class ChessController {
     this.ChessLogic = new ChessLogic();
     this.Blocks = this.generateBlocks();
     this.turn = 'white';
-    //    this.socket = io('https://localhost:3000');
+    this.socket = io('https://localhost:3000');
 
-    this.emptyBlock = null;
+    this.emptyBlock = 'empty';
     this.selected = this.emptyBlock;
-
-    //    this.socket.on('message', (data) => {
-    //      console.log(data);
-    //    });
   }
 
   handleClick(block) {
     console.log('h');
-    if (this.selected === null ||
+    if (this.selected === 'empty' ||
       this.selected.getPiece() === 'empty') {
       this.selected = block;
-      console.log('he');
 
       if (this.turn === block.getColor()) {
-        console.log('hel');
-
         this.highlight(block);
       }
     } else if (this.movePiece(block)) {
-      console.log('hell');
-
       this.turn = (this.turn === 'white') ? 'black' : 'white';
     }
   }
 
   movePiece(block) {
     let ret = false;
-    console.log(block.type);
 
     if (block.type === 'HighlightBlock') {
-      this.ChessLogic.movePiece(this.selected.row, this.selected.col, block.row, block.col);
-      console.log('hello');
+      this.ChessLogic.movePiece(this.selected.row, this.selected.col,
+        block.row, block.col);
+
       ret = true;
     }
     this.selected = this.emptyBlock;
@@ -98,7 +89,7 @@ class Block {
   }
 
   getColor() {
-    return this.tile.piece.substr(0, 5);
+    return this.tile.getColor();
   }
 
   getPiece() {
