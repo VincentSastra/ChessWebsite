@@ -16,10 +16,9 @@ class ChessController {
     console.log('h');
     if (this.selected === 'empty' ||
       this.selected.getPiece() === 'empty') {
-      this.selected = block;
-
       if (this.turn === block.getColor()) {
         this.highlight(block);
+        this.selected = block;
       }
     } else if (this.movePiece(block)) {
       this.turn = (this.turn === 'white') ? 'black' : 'white';
