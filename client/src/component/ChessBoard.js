@@ -1,64 +1,63 @@
-/* eslint-disable indent */
 import React, {Component} from 'react';
 import 'antd/dist/antd.less';
 import './ChessBoard.less';
 import {Row} from 'antd';
-import ChessLogic from './ChessLogic';
+import ChessController from './ChessController';
 
 class ChessBoard extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.ChessLogic = new ChessLogic();
-        this.state = {
-            Tiles: this.ChessLogic.Tiles,
-        };
+    this.ChessController = new ChessController();
+    this.state = {
+      Blocks: this.ChessController.Blocks,
+    };
 
-        this.handleClick = this.handleClick.bind(this);
-    }
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-    handleClick(tile) {
-        this.ChessLogic.handleClick(tile);
-        this.forceUpdate();
-    }
+  handleClick(block) {
+    this.ChessController.handleClick(block);
+    this.forceUpdate();
+  }
 
-    getImagePath(piece) {
-        return ''.concat('pieceImages/', piece, '.png');
-    }
+  getImagePath(piece) {
+    return ''.concat('pieceImages/', piece, '.png');
+  }
 
-    render() {
-        const tiles = this.state.Tiles.slice(0).reverse().map(
-            // Map each tiles row into an HTML row
-            (row) => {
-                // Map each tiles' row's column into an individual HTML button
-                const rowContent = row.map( (tile) => {
-                    return (
-                        <div
-                            key={tile.col + tile.row * 8}
-                            onClick={this.handleClick.bind(this, tile)}
-                            className={tile.type}>
+  render() {
+    const block = this.state.Blocks.slice(0).reverse().map(
+      // Map each block row into an HTML row
+      (blockRow, row) => {
+        // Map each block' row's column into an individual HTML button
+        const rowContent = blockRow.map( (block, col) => {
+          return (
+            <div
+              key={block.col + block.row * 8}
+              onClick={this.handleClick.bind(this, block)}
+              className={block.type}>
 
-                            {tile.piece === 'empty' ? null :
-                                <img
-                                    src={this.getImagePath(tile.piece)}
-                                    className={tile.type + 'Piece'}
-                                    alt={'piece'}
-                                />}
+              {block.getPiece() === 'empty' ? null :
+                <img
+                  src={this.getImagePath(block.getPiece())}
+                  className={block.type + 'Piece'}
+                  alt={block.getPiece()}
+                />}
 
-                        </div>
-                    );
-                });
-
-                return (
-                    <Row key={rowContent[0].key / 8}>{rowContent}</Row>
-                );
-            },
-        );
+            </div>
+          );
+        });
 
         return (
-            <div className="Square">{tiles}</div>
+          <Row key={rowContent[0].key / 8}>{rowContent}</Row>
         );
-}
+      },
+    );
+
+    return (
+      <div className="Square">{block}</div>
+    );
+  }
 }
 
 export default ChessBoard;

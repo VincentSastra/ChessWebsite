@@ -14,7 +14,7 @@
       "require-jsdoc": "off",
       "indent": [
         2,
-        4
+        2
       ],
       "new-cap": "off"
     },

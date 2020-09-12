@@ -1,12 +1,12 @@
 @import "../App.less";
-@tileLength: 80px;
+@blockLength: 80px;
 
-.LightTile{
+.LightBlock{
     background-color: white;
     border: none;
     align-content: center;
-    width: @tileLength;
-    height: @tileLength;
+    width: @blockLength;
+    height: @blockLength;
 }
 
 .Square{
@@ -21,49 +21,49 @@
 
 }
 
-.DarkTile{
+.DarkBlock{
     background-color: black;
     border: none;
     align-content: center;
     child-align: middle;
-    width: @tileLength;
-    height: @tileLength;
+    width: @blockLength;
+    height: @blockLength;
 }
 
-.LightTile:active{
+.LightBlock:active{
     background-color: yellow;
     border: none;
     align-content: center;
-    width: @tileLength;
-    height: @tileLength;
+    width: @blockLength;
+    height: @blockLength;
 }
 
-.DarkTile:active{
+.DarkBlock:active{
     background-color: yellow;
     border: none;
     align-content: center;
     child-align: middle;
-    width: @tileLength;
-    height: @tileLength;
+    width: @blockLength;
+    height: @blockLength;
 }
 
-.highlightTile{
+.HighlightBlock{
     background-color: orange;
     border: none;
     align-content: center;
     child-align: middle;
-    width: @tileLength;
-    height: @tileLength;
+    width: @blockLength;
+    height: @blockLength;
 }
 
-.LightTilePiece{
+.LightBlockPiece{
     -webkit-filter: drop-shadow(1px 1px 0 black)
     drop-shadow(-1px -1px 0 black);
     filter: drop-shadow(1px 1px 0 black)
     drop-shadow(-1px -1px 0 black);
 }
 
-.DarkTilePiece{
+.DarkBlockPiece{
     -webkit-filter: drop-shadow(1px 1px 0 white)
     drop-shadow(-1px -1px 0 white);
     filter: drop-shadow(1px 1px 0 white)

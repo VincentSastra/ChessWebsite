@@ -17,8 +17,8 @@
     "rules": {
       "require-jsdoc": "off",
       "indent": [
-        2,
-        4
+        "error",
+        2
       ],
       "new-cap": "off"
     }

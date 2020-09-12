@@ -18,8 +18,8 @@ const app = express();
 const sessionSecret = require('./config/cookies');
 
 app.use(session({
-    secret: sessionSecret.secret,
-    cookie: {secure: true},
+  secret: sessionSecret.secret,
+  cookie: {secure: true},
 }));
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,8 +32,8 @@ const mongoose = require('mongoose');
 const db = require('./config/keys').MongoURI;
 
 mongoose.connect(db, {useNewUrlParser: true})
-    .then(() => console.log('Database Connected'))
-    .catch((err) => console.log(err));
+  .then(() => console.log('Database Connected'))
+  .catch((err) => console.log(err));
 
 /**
  * Configure Passport
@@ -55,7 +55,7 @@ passport.deserializeUser(Account.deserializeUser());
  * View engine setup and add all directory in views
  */
 app.set('views', [path.join(__dirname, 'views'),
-    path.join(__dirname, 'views/authentication')]);
+  path.join(__dirname, 'views/authentication')]);
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
@@ -68,12 +68,12 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Configuring Helmet
  */
 app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: ['\'self\''],
-            scriptSrc: ['\'self\''],
-        },
-    }),
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ['\'self\''],
+      scriptSrc: ['\'self\''],
+    },
+  }),
 );
 
 app.use('/', indexRouter);
@@ -82,18 +82,18 @@ app.use('/users', usersRouter);
 app.use(express.static(path.join(__dirname, 'client/build')));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    next(createError(404));
+  next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
 module.exports = app;

@@ -4,31 +4,31 @@ import 'antd/dist/antd.less';
 
 class NavBar extends Component {
     state = {
-        current: 'home',
+      current: 'home',
     };
 
     handleClick = (e) => {
-        console.log('click ', e);
-        // eslint-disable-next-line no-invalid-this
-        this.setState({current: e.key});
+      console.log('click ', e);
+      // eslint-disable-next-line no-invalid-this
+      this.setState({current: e.key});
     };
 
     render() {
-        const {current} = this.state;
-        return (
-            <Menu
-                onClick={this.handleClick}
-                selectedKeys={[current]}
-                mode="horizontal"
-            >
-                <Menu.Item key="home">
+      const {current} = this.state;
+      return (
+        <Menu
+          onClick={this.handleClick}
+          selectedKeys={[current]}
+          mode="horizontal"
+        >
+          <Menu.Item key="home">
                     home
-                </Menu.Item>
-                <Menu.Item key="login">
+          </Menu.Item>
+          <Menu.Item key="login">
                     login
-                </Menu.Item>
-            </Menu>
-        );
+          </Menu.Item>
+        </Menu>
+      );
     }
 }
 
