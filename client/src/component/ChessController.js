@@ -20,7 +20,6 @@ class ChessController {
     console.log('h');
     if (this.selected === null ||
       this.selected.getPiece() === 'empty') {
-
       this.selected = block;
       console.log('he');
 
