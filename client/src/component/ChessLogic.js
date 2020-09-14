@@ -151,8 +151,12 @@ class ChessLogic {
     }
   }
 
-  getPieceArray() {
-    return this.Tiles.map( (tileRow) => tileRow.map((tile) => tile.piece));
+  clone() {
+    return new ChessLogic(
+      this.Tiles.map((row) =>
+        row.map((tileInfo) => tileInfo.piece),
+      ),
+    );
   }
 }
 
@@ -235,6 +239,10 @@ class TileInfo {
 
   getPiece() {
     return this.piece.substr(5);
+  }
+
+  clone() {
+    return new TileInfo(this.row, this.col, this.piece);
   }
 }
 
