@@ -1,5 +1,5 @@
 import {generateMoveMinMax} from '../server/services/ChessComputer';
-const {ChessLogic} = require('../server/services/ChessLogic');
+const {ChessLogic} = require('../client/src/component/ChessLogic');
 
 describe('Min Max method', () => {
   const emptyTileSet = [];
