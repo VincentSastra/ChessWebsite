@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "babel-eslint": "^10.1.0",
     "body-parser": "^1.19.0",
@@ -17,9 +20,35 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^7.8.1",
     "eslint-config-google": "^0.14.0",
+    "jest": "^26.4.2",
     "less": "^3.12.2",
-    "less-loader": "^7.0.1"
+    "less-loader": "^7.0.1",
+    "superagent": "^6.1.0",
+    "supertest": "^4.0.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "google"
+    ],
+    "rules": {
+      "require-jsdoc": "off",
+      "indent": [
+        2,
+        2
+      ],
+      "new-cap": "off"
+    },
+    "env": {
+      "es6": true,
+      "jest": true
+    },
+    "parser": "babel-eslint"
   }
 }

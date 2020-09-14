@@ -1,12 +1,16 @@
 class ChessLogic {
-  constructor() {
-    this.Tiles = generateChessBoard();
-    this.turn = 'white';
+  constructor(tileArr = emptyArr()) {
+    // Use shallow copy
+    this.Tiles = generateChessBoard(tileArr);
   }
 
   movePiece(row1, col1, row2, col2) {
     this.Tiles[row2][col2].piece = this.Tiles[row1][col1].piece;
     this.Tiles[row1][col1].piece = 'empty';
+  }
+
+  getPiece(row, col) {
+    return this.Tiles[row][col].getPiece();
   }
 
   getValidTiles(row, col) {
@@ -76,8 +80,6 @@ class ChessLogic {
         const rowCounter = (i % 2) ? 1 : -1;
         let curRow = row + rowCounter;
 
-        // processTile highlights the tile if the piece can go there
-        // and return true if there is a piece there
         while (this.processTile(curRow, curCol, color, validMoves)) {
           curCol += colCounter;
           curRow += rowCounter;
@@ -126,7 +128,6 @@ class ChessLogic {
     if (row > 7 || row < 0 || col > 7 || col < 0) {
       return false;
     }
-    console.log(row + ' ' + col);
     const tile = this.Tiles[row][col];
 
     if (tile.getColor() === 'empty') {
@@ -149,15 +150,19 @@ class ChessLogic {
       }
     }
   }
+
+  getPieceArray() {
+    return this.Tiles.map( (tileRow) => tileRow.map((tile) => tile.piece));
+  }
 }
 
-function generateChessBoard() {
+function generateChessBoard(pieceArr) {
   const tiles = [];
 
   for (let i = 0; i < 8; i++) {
     const curRow = [];
     for (let j = 0; j < 8; j++) {
-      curRow.push(new TileInfo(i, j));
+      curRow.push(new TileInfo(i, j, pieceArr[i][j]));
     }
     tiles.push(curRow);
   }
@@ -166,52 +171,62 @@ function generateChessBoard() {
 }
 
 
+function emptyArr() {
+  const arr = [];
+
+  for (let i = 0; i < 8; i++) {
+    const curRow = [];
+    for (let j = 0; j < 8; j++) {
+      curRow.push(generatePiece(i, j));
+    }
+    arr.push(curRow);
+  }
+
+  return arr;
+}
+
+function generatePiece(rowNum, colNum) {
+  if (rowNum < 1) {
+    switch (Math.abs(7 - 2 * colNum)) {
+    case 7:
+      return 'whiteRook';
+    case 5:
+      return 'whiteKnight';
+    case 3:
+      return 'whiteBishop';
+    case 1:
+      return colNum === 4 ? 'whiteKing' : 'whiteQueen';
+    default:
+      return 'empty';
+    }
+  } else if (rowNum < 2) {
+    return 'whitePawn';
+  } else if (rowNum < 6) {
+    return 'empty';
+  } else if (rowNum < 7) {
+    return 'blackPawn';
+  } else if (rowNum < 8) {
+    switch (Math.abs(7 - 2 * colNum)) {
+    case 7:
+      return 'blackRook';
+    case 5:
+      return 'blackKnight';
+    case 3:
+      return 'blackBishop';
+    case 1:
+      return colNum === 4 ? 'blackKing' : 'blackQueen';
+    default:
+      return 'empty';
+    }
+  }
+}
+
 class TileInfo {
-  constructor(rowNum, colNum) {
+  constructor(rowNum, colNum, piece = this.generatePiece(rowNum, colNum)) {
     this.row = rowNum;
     this.col = colNum;
 
-    if (rowNum < 1) {
-      switch (Math.abs(7 - 2 * colNum)) {
-      case 7:
-        this.piece = 'whiteRook';
-        break;
-      case 5:
-        this.piece = 'whiteKnight';
-        break;
-      case 3:
-        this.piece = 'whiteBishop';
-        break;
-      case 1:
-        this.piece = colNum === 4 ? 'whiteKing' : 'whiteQueen';
-        break;
-      default:
-        this.piece = 'empty';
-      }
-    } else if (rowNum < 2) {
-      this.piece = 'whitePawn';
-    } else if (rowNum < 6) {
-      this.piece = 'empty';
-    } else if (rowNum < 7) {
-      this.piece = 'blackPawn';
-    } else if (rowNum < 8) {
-      switch (Math.abs(7 - 2 * colNum)) {
-      case 7:
-        this.piece = 'blackRook';
-        break;
-      case 5:
-        this.piece = 'blackKnight';
-        break;
-      case 3:
-        this.piece = 'blackBishop';
-        break;
-      case 1:
-        this.piece = colNum === 4 ? 'blackKing' : 'blackQueen';
-        break;
-      default:
-        this.piece = 'empty';
-      }
-    }
+    this.piece = piece;
   }
 
   getColor() {
@@ -223,4 +238,4 @@ class TileInfo {
   }
 }
 
-export default ChessLogic;
+export {ChessLogic, TileInfo};

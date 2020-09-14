@@ -1,4 +1,4 @@
-import ChessLogic from './ChessLogic';
+import {ChessLogic} from './ChessLogic';
 const io = require('socket.io-client');
 
 class ChessController {
@@ -92,7 +92,7 @@ class Block {
   }
 
   getPiece() {
-    return this.tile.piece;
+    return this.tile.getColor() + this.tile.getPiece();
   }
 }
 
