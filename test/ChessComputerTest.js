@@ -56,4 +56,21 @@ describe('Min Max method', () => {
       .futureMove.substr(0, 4))
       .toBe('3532');
   });
+
+  test('Checkmate e', () => {
+    const ChessBoard = new ChessLogic(emptyTileSet);
+    ChessBoard.Tiles[6][5].piece = 'blackPawn';
+    ChessBoard.Tiles[6][6].piece = 'blackPawn';
+    ChessBoard.Tiles[6][7].piece = 'blackPawn';
+    ChessBoard.Tiles[7][4].piece = 'blackRook';
+    ChessBoard.Tiles[7][2].piece = 'blackRook';
+    ChessBoard.Tiles[7][6].piece = 'blackKing';
+
+    ChessBoard.Tiles[3][0].piece = 'whiteQueen';
+    ChessBoard.Tiles[0][4].piece = 'whiteRook';
+
+    expect(generateMoveMinMax(ChessBoard, 'white', 5)
+      .futureValue)
+      .toBeGreaterThan(1000);
+  });
 });

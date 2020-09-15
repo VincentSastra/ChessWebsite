@@ -1,6 +1,6 @@
 const pieceValue = {
   'Queen': 90,
-  'King': 200,
+  'King': 2000,
   'Rook': 50,
   'Knight': 30,
   'Bishop': 30,
@@ -9,6 +9,7 @@ const pieceValue = {
 };
 
 // Time complexity is O(2^n)
+// Takes 3 min in my computer when running 6 recursion
 export function generateMoveMinMax(board, turn, recursiveCall) {
   if (recursiveCall === 0) {
     const futureValue = 0;
@@ -23,8 +24,16 @@ export function generateMoveMinMax(board, turn, recursiveCall) {
   recursiveCall = Math.min(recursiveCall, 5);
 
   let optimalMove = '';
-  let optimalValue = -1;
+  let optimalValue = 'nodef';
 
+  /**
+  if (recursiveCall !== 0) {
+    console.log(board.Tiles.map(
+      (row) => row.filter((tile) => tile.piece !== 'empty'))
+      .filter((row) => row.length !== 0)
+    );
+  }
+   **/
 
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
@@ -39,14 +48,24 @@ export function generateMoveMinMax(board, turn, recursiveCall) {
           const {futureMove, futureValue} = generateMoveMinMax(nextBoard,
             nextTurn, recursiveCall - 1);
 
+
           const curValue = pieceValue[board.Tiles[validTile.row][validTile.col]
             .piece.substr(5)];
 
-          if (curValue - futureValue > optimalValue) {
-            optimalValue = curValue - futureValue;
-
-            // eslint-disable-next-line max-len
-            optimalMove = '' + row + col + validTile.row + validTile.col + futureMove;
+          if (turn === 'white') {
+            if (optimalValue === 'nodef' ||
+              curValue + futureValue > optimalValue) {
+              optimalValue = futureValue + curValue;
+              // eslint-disable-next-line max-len
+              optimalMove = '' + row + col + validTile.row + validTile.col + futureMove;
+            }
+          } else {
+            if (optimalValue === 'nodef' ||
+              -curValue + futureValue < optimalValue) {
+              optimalValue = futureValue - curValue;
+              // eslint-disable-next-line max-len
+              optimalMove = '' + row + col + validTile.row + validTile.col + futureMove;
+            }
           }
         });
       }
