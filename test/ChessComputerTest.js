@@ -57,7 +57,8 @@ describe('Min Max method', () => {
       .toBe('3532');
   });
 
-  test('Checkmate e', () => {
+  // Fen notation '1r2r1k1/5ppp/8/8/Q7/8/8/4R3'
+  test('Checkmate in 3', () => {
     const ChessBoard = new ChessLogic(emptyTileSet);
     ChessBoard.Tiles[6][5].piece = 'blackPawn';
     ChessBoard.Tiles[6][6].piece = 'blackPawn';
