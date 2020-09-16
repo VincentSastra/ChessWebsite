@@ -74,4 +74,20 @@ describe('Min Max method', () => {
       .futureValue)
       .toBeGreaterThan(1000);
   });
+
+  test('En Passant', () => {
+    const ChessBoard = new ChessLogic(emptyTileSet);
+    ChessBoard.Tiles[4][5].piece = 'blackPawn';
+    ChessBoard.Tiles[4][6].piece = 'whitePawn';
+    ChessBoard.Peasant = '55';
+
+    expect(generateMoveMinMax(ChessBoard, 'white', 1)
+      .futureMove)
+      .toBe('4655');
+  });
+
+  test('Standard for Runtime', () => {
+    const ChessBoard = new ChessLogic();
+    generateMoveMinMax(ChessBoard, 'white', 4);
+  });
 });

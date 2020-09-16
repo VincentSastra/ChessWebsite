@@ -1,12 +1,56 @@
 class ChessLogic {
-  constructor(tileArr = emptyArr()) {
+  constructor(tileArr = emptyArr(), castle = 'KQkq', peasant = '') {
     // Use shallow copy
     this.Tiles = generateChessBoard(tileArr);
+    this.Castle = castle;
+    this.Peasant = peasant;
   }
 
   movePiece(row1, col1, row2, col2) {
+    const tile = this.Tiles[row1][col1];
+    let eaten = 'empty';
+
+    eaten = this.Tiles[row2][col2].getPiece();
     this.Tiles[row2][col2].piece = this.Tiles[row1][col1].piece;
+
+    if (tile.getPiece() === 'Pawn' && '' + row2 + col2 === this.Peasant) {
+      eaten = this.Tiles[row1][col2].getPiece();
+      this.Tiles[row1][col2].piece = 'empty';
+    } else if (tile.getPiece() === 'King') {
+      if (Math.abs(col2 - col1) > 1) {
+        if (col2 === 2) {
+          this.movePiece(row1, 0, row2, 3);
+        } else if (col2 === 6) {
+          this.movePiece(row1, 7, row2, 5);
+        }
+      }
+
+      if (tile.getColor() === 'white') {
+        this.Castle = this.Castle.replace(/[KQ]/g, '');
+      } else if (tile.getColor() === 'black') {
+        this.Castle = this.Castle.replace(/[kq]/g, '');
+      }
+    } else if (tile.getPiece() === 'Rook') {
+      if (row1 === 0 && col1 === 0) {
+        this.Castle = this.Castle.replace('Q', '');
+      } else if (row1 === 0 && col1 === 7) {
+        this.Castle = this.Castle.replace('K', '');
+      } else if (row1 === 7 && col1 === 0) {
+        this.Castle = this.Castle.replace('q', '');
+      } else if (row1 === 7 && col1 === 7) {
+        this.Castle = this.Castle.replace('k', '');
+      }
+    }
+
+    this.Peasant = '';
+
+    if (tile.getPiece() === 'Pawn' && Math.abs(row2 - row1) === 2) {
+      const direction = tile.getColor() === 'white' ? 1 : -1;
+      this.Peasant = '' + (row1 + direction) + col1;
+    }
     this.Tiles[row1][col1].piece = 'empty';
+
+    return eaten;
   }
 
   getPiece(row, col) {
@@ -72,6 +116,7 @@ class ChessLogic {
       }
       break;
     }
+
     case ('Bishop'): {
       for (let i = 0; i < 5; i++) {
         const colCounter = (i < 1.5) ? 1 : -1;
@@ -95,8 +140,26 @@ class ChessLogic {
         }
       }
 
+      const startRow = color === 'white' ? 0 : 7;
+
+      if (((color === 'white' && this.Castle.includes('K')) ||
+          (color === 'black' && this.Castle.includes('k'))) &&
+          TileSet[startRow][6].getColor() === 'empty' &&
+          TileSet[startRow][5].getColor() === 'empty') {
+        validMoves.push(TileSet[startRow][6]);
+      }
+
+      if (((color === 'white' && this.Castle.includes('Q')) ||
+        (color === 'black' && this.Castle.includes('q'))) &&
+        TileSet[startRow][1].getColor() === 'empty' &&
+        TileSet[startRow][2].getColor() === 'empty' &&
+        TileSet[startRow][3].getColor() === 'empty') {
+        validMoves.push(TileSet[startRow][2]);
+      }
+
       break;
     }
+
     case ('Pawn'): {
       const distance = (row === 1 || row === 6) ? 3 : 2;
       const direction = color === 'white' ? 1 : -1;
@@ -111,8 +174,8 @@ class ChessLogic {
         }
       }
 
-      this.addIfEnemy(row + direction, col + 1, color, validMoves);
-      this.addIfEnemy(row + direction, col - 1, color, validMoves);
+      this.processTilePawn(row + direction, col + 1, color, validMoves);
+      this.processTilePawn(row + direction, col - 1, color, validMoves);
 
       break;
     }
@@ -141,11 +204,14 @@ class ChessLogic {
     }
   }
 
-  addIfEnemy(row, col, colour, validMoves) {
+  processTilePawn(row, col, color, validMoves) {
     if (row > -1 && row < 8 && col > -1 && col < 8) {
       const tile = this.Tiles[row][col];
 
-      if (tile.getColor() !== 'empty' && tile.getColor() !== colour) {
+      if ('' + tile.row + tile.col === this.Peasant) {
+        validMoves.push(tile);
+      } else if ((tile.getColor() !== 'empty' && tile.getColor() !== color) ||
+          '' + tile.row + tile.col === this.Peasant) {
         validMoves.push(tile);
       }
     }
@@ -156,6 +222,8 @@ class ChessLogic {
       this.Tiles.map((row) =>
         row.map((tileInfo) => tileInfo.piece),
       ),
+      this.Castle,
+      this.Peasant,
     );
   }
 }

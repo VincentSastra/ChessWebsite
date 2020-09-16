@@ -13,7 +13,6 @@ class ChessController {
   }
 
   handleClick(block) {
-    console.log('h');
     if (this.selected === 'empty' ||
       this.selected.getPiece() === 'empty') {
       if (this.turn === block.getColor()) {

@@ -43,14 +43,11 @@ export function generateMoveMinMax(board, turn, recursiveCall) {
         board.getValidTiles(row, col).forEach((validTile) => {
           const nextBoard = board.clone();
 
-          nextBoard.movePiece(row, col, validTile.row, validTile.col);
+          const curValue = pieceValue[
+            nextBoard.movePiece(row, col, validTile.row, validTile.col)];
 
           const {futureMove, futureValue} = generateMoveMinMax(nextBoard,
             nextTurn, recursiveCall - 1);
-
-
-          const curValue = pieceValue[board.Tiles[validTile.row][validTile.col]
-            .piece.substr(5)];
 
           if (turn === 'white') {
             if (optimalValue === 'nodef' ||
