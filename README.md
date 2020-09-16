@@ -10,7 +10,6 @@ ___
 ## Roadmap:
 
 ### Urgent Task:
-- Recognize En Peasant
 - Recognize promotion
 - Recognize Victory and Checkmates
 - Try to use one single ChessBoard and keep the moves I did on stack
