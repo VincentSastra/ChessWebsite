@@ -1,7 +1,12 @@
 # A Chess Website with React and Node.js
 
-Currently working on the chess ai & being able to play online
-
+## Current Features:
+- React Chessboard
+- Shows valid moves
+- Working user login database backend
+- JEST & testing integration
+- Simple chess computer on backend
+___
 ## Roadmap:
 
 ### Urgent Task:
@@ -10,13 +15,18 @@ Currently working on the chess ai & being able to play online
 - Recognize Victory and Checkmates
 
 ### Basic Functionality:
-- User Login
-- Local Match
-- Versus server-side computer
+1. Local Match
+2. Versus server-side computer
+3. User Login
+4. Save user matches
 
 ### Future Todo:
 - Google Cloud Integration
 - Migrate Computer as Serverless Functions
+- Computer revamp:
+  1. Use different datastructure compared to front end
+  2. Faster Cloning
+  3. Optimize searching valid tiles
 - Optimize Computer by:
   1. Pruning search tree
   2. Optimize certain positions
