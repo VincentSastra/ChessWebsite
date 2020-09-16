@@ -14,6 +14,7 @@ ___
 - Recognize Victory and Checkmates
 - Try to use one single ChessBoard and keep the moves I did on stack
   <br \>  Undo move after search tree end.
+- Change from pieces eaten system to evaluate board system.
 
 ### Basic Functionality:
 1. Local Match
