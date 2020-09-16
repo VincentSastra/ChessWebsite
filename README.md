@@ -13,6 +13,8 @@ ___
 - Recognize En Peasant
 - Recognize promotion
 - Recognize Victory and Checkmates
+- Try to use one single ChessBoard and keep the moves I did on stack
+  Undo move after search tree end.
 
 ### Basic Functionality:
 1. Local Match
