@@ -27,7 +27,7 @@ ___
   1. Use different datastructure compared to front end
   2. Faster Cloning
   3. Optimize searching valid tiles
-- Optimize Computer by:
+- Optimize Computer Algorithm by:
   1. Pruning search tree
   2. Optimize certain positions
   3. Database of opening moves
