@@ -3,14 +3,19 @@ class ChessLogic {
     // Use shallow copy
     this.Tiles = generateChessBoard(tileArr);
     this.Castle = castle;
+    this.Winner = 'none';
     this.Passant = peasant;
   }
 
   movePiece(sourceRow, sourceCol, destRow, destCol, promotion = 'Queen') {
     const sourceTile = this.Tiles[sourceRow][sourceCol];
-    let eaten = 'empty';
 
-    eaten = this.Tiles[destRow][destCol].getPiece();
+    let eaten = this.Tiles[destRow][destCol].getPiece();
+
+    if (eaten === 'King') {
+      this.Winner = this.Tiles[destRow][destCol].getColor() === 'white' ?
+        'black' : 'white';
+    }
 
     this.Tiles[destRow][destCol].piece = this.Tiles[sourceRow][sourceCol].piece;
 
@@ -59,6 +64,10 @@ class ChessLogic {
     sourceTile.piece = 'empty';
 
     return eaten;
+  }
+
+  getWinner() {
+    return this.Winner;
   }
 
   getPiece(row, col) {

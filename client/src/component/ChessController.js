@@ -2,12 +2,13 @@ import {ChessLogic} from './ChessLogic';
 const io = require('socket.io-client');
 
 class ChessController {
-  constructor() {
+  constructor(showVictoryScreen) {
     this.ChessLogic = new ChessLogic();
     this.Blocks = this.generateBlocks();
     this.turn = 'white';
     this.socket = io('https://localhost:3000');
 
+    this.showVictoryScreen = showVictoryScreen;
     this.emptyBlock = 'empty';
     this.selectedBlock = this.emptyBlock;
   }
@@ -21,6 +22,10 @@ class ChessController {
       }
     } else if (this.movePiece(block)) {
       this.turn = (this.turn === 'white') ? 'black' : 'white';
+    }
+
+    if (this.ChessLogic.getWinner() !== 'none') {
+      this.showVictoryScreen(this.ChessLogic.getWinner());
     }
   }
 

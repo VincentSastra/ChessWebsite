@@ -8,7 +8,7 @@ class ChessBoard extends Component {
   constructor(props) {
     super(props);
 
-    this.ChessController = new ChessController();
+    this.ChessController = new ChessController(this.showVictoryScreen);
     this.state = {
       Blocks: this.ChessController.Blocks,
     };
@@ -25,12 +25,16 @@ class ChessBoard extends Component {
     return ''.concat('pieceImages/', piece, '.png');
   }
 
+  showVictoryScreen(winner) {
+    console.log(winner);
+  }
+
   render() {
     const block = this.state.Blocks.slice(0).reverse().map(
       // Map each block row into an HTML row
-      (blockRow, row) => {
+      (blockRow) => {
         // Map each block' row's column into an individual HTML button
-        const rowContent = blockRow.map( (block, col) => {
+        const rowContent = blockRow.map( (block) => {
           return (
             <div
               key={block.col + block.row * 8}
