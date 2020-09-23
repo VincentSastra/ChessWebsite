@@ -34,6 +34,9 @@ ___
   2. Optimize certain positions
   3. Database of opening moves
   4. Search until stable position found
+- Final Visual Touches:
+  1. Update chess piece visual model
+  2. Add sound effects for moving & taking
   
 ### Final Mission:
 - Find out the MMR of our computer
