@@ -20,7 +20,7 @@ export function generateMoveMinMax(board, turn, recursiveCall) {
 
   const nextTurn = turn === 'white' ? 'black' : 'white';
 
-  // Make sure that the HTML request couldn't do too processing power
+  // Make sure that the HTML request couldn't take too much processing power
   recursiveCall = Math.min(recursiveCall, 5);
 
   let optimalMove = '';

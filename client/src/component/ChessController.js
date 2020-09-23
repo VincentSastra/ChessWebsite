@@ -9,15 +9,15 @@ class ChessController {
     this.socket = io('https://localhost:3000');
 
     this.emptyBlock = 'empty';
-    this.selected = this.emptyBlock;
+    this.selectedBlock = this.emptyBlock;
   }
 
   handleClick(block) {
-    if (this.selected === 'empty' ||
-      this.selected.getPiece() === 'empty') {
+    if (this.selectedBlock === 'empty' ||
+      this.selectedBlock.getPiece() === 'empty') {
       if (this.turn === block.getColor()) {
         this.highlight(block);
-        this.selected = block;
+        this.selectedBlock = block;
       }
     } else if (this.movePiece(block)) {
       this.turn = (this.turn === 'white') ? 'black' : 'white';
@@ -25,18 +25,18 @@ class ChessController {
   }
 
   movePiece(block) {
-    let ret = false;
+    let validMove = false;
 
     if (block.type === 'HighlightBlock') {
-      this.ChessLogic.movePiece(this.selected.row, this.selected.col,
+      this.ChessLogic.movePiece(this.selectedBlock.row, this.selectedBlock.col,
         block.row, block.col);
 
-      ret = true;
+      validMove = true;
     }
-    this.selected = this.emptyBlock;
+    this.selectedBlock = this.emptyBlock;
     this.unhighlight();
 
-    return ret;
+    return validMove;
   }
 
   highlight(block) {

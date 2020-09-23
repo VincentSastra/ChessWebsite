@@ -3,52 +3,60 @@ class ChessLogic {
     // Use shallow copy
     this.Tiles = generateChessBoard(tileArr);
     this.Castle = castle;
-    this.Peasant = peasant;
+    this.Passant = peasant;
   }
 
-  movePiece(row1, col1, row2, col2) {
-    const tile = this.Tiles[row1][col1];
+  movePiece(sourceRow, sourceCol, destRow, destCol, promotion = 'Queen') {
+    const sourceTile = this.Tiles[sourceRow][sourceCol];
     let eaten = 'empty';
 
-    eaten = this.Tiles[row2][col2].getPiece();
-    this.Tiles[row2][col2].piece = this.Tiles[row1][col1].piece;
+    eaten = this.Tiles[destRow][destCol].getPiece();
 
-    if (tile.getPiece() === 'Pawn' && '' + row2 + col2 === this.Peasant) {
-      eaten = this.Tiles[row1][col2].getPiece();
-      this.Tiles[row1][col2].piece = 'empty';
-    } else if (tile.getPiece() === 'King') {
-      if (Math.abs(col2 - col1) > 1) {
-        if (col2 === 2) {
-          this.movePiece(row1, 0, row2, 3);
-        } else if (col2 === 6) {
-          this.movePiece(row1, 7, row2, 5);
+    this.Tiles[destRow][destCol].piece = this.Tiles[sourceRow][sourceCol].piece;
+
+    if (sourceTile.getPiece() === 'Pawn') {
+      if ('' + destRow + destCol === this.Passant) {
+        eaten = this.Tiles[sourceRow][destCol].getPiece();
+        this.Tiles[sourceRow][destCol].piece = 'empty';
+      } else if (destRow === 0 || destRow === 7) {
+        this.Tiles[destRow][destCol].piece = sourceTile.getColor() + promotion;
+      }
+    } else if (sourceTile.getPiece() === 'King') {
+      if (Math.abs(destCol - sourceCol) > 1) {
+        if (destCol === 2) {
+          this.movePiece(sourceRow, 0, destRow, 3);
+        } else if (destCol === 6) {
+          this.movePiece(sourceRow, 7, destRow, 5);
         }
       }
 
-      if (tile.getColor() === 'white') {
+      if (sourceTile.getColor() === 'white') {
         this.Castle = this.Castle.replace(/[KQ]/g, '');
-      } else if (tile.getColor() === 'black') {
+      } else if (sourceTile.getColor() === 'black') {
         this.Castle = this.Castle.replace(/[kq]/g, '');
       }
-    } else if (tile.getPiece() === 'Rook') {
-      if (row1 === 0 && col1 === 0) {
+    } else if (sourceTile.getPiece() === 'Rook') {
+      if (sourceRow === 0 && sourceCol === 0) {
         this.Castle = this.Castle.replace('Q', '');
-      } else if (row1 === 0 && col1 === 7) {
+      } else if (sourceRow === 0 && sourceCol === 7) {
         this.Castle = this.Castle.replace('K', '');
-      } else if (row1 === 7 && col1 === 0) {
+      } else if (sourceRow === 7 && sourceCol === 0) {
         this.Castle = this.Castle.replace('q', '');
-      } else if (row1 === 7 && col1 === 7) {
+      } else if (sourceRow === 7 && sourceCol === 7) {
         this.Castle = this.Castle.replace('k', '');
       }
     }
 
-    this.Peasant = '';
+    this.Passant = '';
 
-    if (tile.getPiece() === 'Pawn' && Math.abs(row2 - row1) === 2) {
-      const direction = tile.getColor() === 'white' ? 1 : -1;
-      this.Peasant = '' + (row1 + direction) + col1;
+    // Set the en passant square
+    if (sourceTile.getPiece() === 'Pawn' &&
+      Math.abs(destRow - sourceRow) === 2) {
+      const direction = sourceTile.getColor() === 'white' ? 1 : -1;
+      this.Passant = '' + (sourceRow + direction) + sourceCol;
     }
-    this.Tiles[row1][col1].piece = 'empty';
+
+    sourceTile.piece = 'empty';
 
     return eaten;
   }
@@ -208,10 +216,10 @@ class ChessLogic {
     if (row > -1 && row < 8 && col > -1 && col < 8) {
       const tile = this.Tiles[row][col];
 
-      if ('' + tile.row + tile.col === this.Peasant) {
+      if ('' + tile.row + tile.col === this.Passant) {
         validMoves.push(tile);
       } else if ((tile.getColor() !== 'empty' && tile.getColor() !== color) ||
-          '' + tile.row + tile.col === this.Peasant) {
+          '' + tile.row + tile.col === this.Passant) {
         validMoves.push(tile);
       }
     }
@@ -223,7 +231,7 @@ class ChessLogic {
         row.map((tileInfo) => tileInfo.piece),
       ),
       this.Castle,
-      this.Peasant,
+      this.Passant,
     );
   }
 }
