@@ -8,9 +8,11 @@ class ChessController {
     this.turn = 'white';
     this.socket = io('https://localhost:3000');
 
-    this.showVictoryScreen = showVictoryScreen;
     this.emptyBlock = 'empty';
     this.selectedBlock = this.emptyBlock;
+
+    this.aftermatch = false;
+    this.showVictoryScreen = showVictoryScreen;
   }
 
   handleClick(block) {
@@ -24,7 +26,8 @@ class ChessController {
       this.turn = (this.turn === 'white') ? 'black' : 'white';
     }
 
-    if (this.ChessLogic.getWinner() !== 'none') {
+    if (this.ChessLogic.getWinner() !== 'none' && !this.aftermatch) {
+      this.aftermatch = true;
       this.showVictoryScreen(this.ChessLogic.getWinner());
     }
   }
