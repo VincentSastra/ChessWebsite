@@ -14,7 +14,7 @@ class ChessLogic {
 
     if (eaten === 'King') {
       this.Winner = this.Tiles[destRow][destCol].getColor() === 'white' ?
-        'black' : 'white';
+        'Black' : 'White';
     }
 
     this.Tiles[destRow][destCol].piece = this.Tiles[sourceRow][sourceCol].piece;

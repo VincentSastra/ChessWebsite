@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.less';
 import './ChessBoard.less';
-import {Row} from 'antd';
+import {Modal, Row} from 'antd';
 import ChessController from './ChessController';
 
 class ChessBoard extends Component {
@@ -26,7 +26,15 @@ class ChessBoard extends Component {
   }
 
   showVictoryScreen(winner) {
-    console.log(winner);
+    Modal.info({
+      title: winner + ' Wins!',
+      content: (
+        <div>
+          <p>Return to main menu for new game</p>
+        </div>
+      ),
+      onOk() {},
+    });
   }
 
   render() {
