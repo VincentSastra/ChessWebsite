@@ -37,6 +37,8 @@ ___
 - Final Visual Touches:
   1. Update chess piece visual model
   2. Add sound effects for moving & taking
+- Extra Features:
+  1. User Chat
   
 ### Final Mission:
 - Find out the MMR of our computer
