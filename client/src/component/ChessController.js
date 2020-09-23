@@ -2,7 +2,7 @@ import {ChessLogic} from './ChessLogic';
 const io = require('socket.io-client');
 
 class ChessController {
-  constructor(showVictoryScreen) {
+  constructor(showVictoryScreen = () => {}) {
     this.ChessLogic = new ChessLogic();
     this.Blocks = this.generateBlocks();
     this.turn = 'white';
