@@ -6,6 +6,8 @@ import ChessController from './ChessController';
 
 class ChessBoard extends Component {
   constructor(props) {
+    console.log(props.location.state.option);
+
     super(props);
 
     this.ChessController = new ChessController(this.showVictoryScreen);
