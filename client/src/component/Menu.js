@@ -1,7 +1,8 @@
-// USe link and Hooks
+// Use link and Hooks
 import React from 'react';
 import {Card, Row} from 'antd';
 import {Link} from 'react-router-dom';
+import './Menu.less';
 
 function MenuCard(props) {
   return (

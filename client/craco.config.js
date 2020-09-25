@@ -9,7 +9,6 @@ module.exports = {
         customizeTheme: {
           '@text-color': '#726D81',
           '@primary-color': '#22223B',
-
         },
       },
     },

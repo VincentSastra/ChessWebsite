@@ -1,6 +1,43 @@
 @import "../App.less";
 @blockLength: 80px;
 
+.SideMenu {
+    margin-left: 20px;
+    background-color: lightgray;
+    width: 250px;
+    height: 640px;
+}
+
+.MoveList {
+    background-color: white;
+    margin-top: 10px;
+    vertical-align: middle;
+}
+
+.ant-list-item {
+    height: 16px;
+}
+
+.ant-card-body {
+    max-height: 640px;
+}
+
+.ant-list-items {
+    overflow: auto;
+    max-height: 504px;
+    scrollbar-width: none;
+}
+
+.ant-list-items::-webkit-scrollbar {
+    width: 0;
+    background: transparent; /* make scrollbar transparent */
+}
+
+.SmallFont {
+    font-size: 10px;
+    margin: 0;
+}
+
 .LightBlock{
     background-color: white;
     border: none;
@@ -18,14 +55,9 @@
 }
 
 .Centered {
+    margin-top: 30px;
     display: flex;
     justify-content: center;
-}
-
-.MenuCard {
-    padding: 50px 20px 50px 10px;
-    width: 40%;
-    text-align: center;
 }
 
 .DarkBlock{

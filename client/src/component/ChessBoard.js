@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.less';
 import './ChessBoard.less';
-import {Modal, Row} from 'antd';
+import {Modal, Row, Card, List, Button} from 'antd';
 import ChessController from './ChessController';
+import {Link} from 'react-router-dom';
 
 class ChessBoard extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class ChessBoard extends Component {
     });
   }
 
-  render() {
+  renderBoard() {
     const block = this.state.Blocks.slice(0).reverse().map(
       // Map each block row into an HTML row
       (blockRow) => {
@@ -70,6 +71,41 @@ class ChessBoard extends Component {
 
     return (
       <div className="Square">{block}</div>
+    );
+  }
+
+  renderMenu() {
+    return (
+      <Card className="SideMenu">
+        <Link to="/">
+          <Button block>Return to Main Menu</Button>
+        </Link>
+
+        <List
+          className="MoveList"
+          size="small"
+          bordered="true"
+          header={<div>Move List</div>}
+          dataSource={this.ChessController.moveList}
+          renderItem={(item) => (
+            <List.Item style={{marginBottom: '0px'}}>
+              <p className="SmallFont">{item}</p>
+            </List.Item>
+          )}
+        />
+      </Card>
+    );
+  }
+
+  render() {
+    const board = this.renderBoard();
+    const menu = this.renderMenu();
+
+    return (
+      <Row className="Centered">
+        {board}
+        {menu}
+      </Row>
     );
   }
 }

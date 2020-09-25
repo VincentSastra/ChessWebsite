@@ -11,6 +11,8 @@ class ChessController {
     this.emptyBlock = 'empty';
     this.selectedBlock = this.emptyBlock;
 
+    this.moveList = [];
+
     this.aftermatch = false;
     this.showVictoryScreen = showVictoryScreen;
   }
@@ -24,6 +26,13 @@ class ChessController {
       }
     } else if (this.movePiece(block)) {
       this.turn = (this.turn === 'white') ? 'black' : 'white';
+
+      this.moveList.push(
+        (this.moveList.length + 1) + '. \t' +
+        block.getPiece().substr(5) +
+        ' move to ' +
+        String.fromCharCode(block.col + 65) +
+        (block.row + 1));
     }
 
     if (this.ChessLogic.getWinner() !== 'none' && !this.aftermatch) {
