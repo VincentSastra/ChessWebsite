@@ -11,7 +11,9 @@ ___
 
 ### Urgent Task:
 - Recognize promotion
-- Recognize Victory and Checkmates
+- Let player choose between playing white or black
+- Rotate the board if player playing black
+- Recognize Checkmates
 - Try to use one single ChessBoard and keep the moves I did on stack
   <br \>  Undo move after search tree end.
 - Change from pieces eaten system to evaluate board system.
