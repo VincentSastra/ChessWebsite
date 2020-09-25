@@ -29,21 +29,19 @@ function MenuCard(props) {
 
 function Menu() {
   return (
-    <div className="Centered">
-      <Row className="Centered">
-        <MenuCard
-          option={'local'}
-          img={'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'}
-          title={'Local Multiplayer'}
-        />
+    <Row className="Centered">
+      <MenuCard
+        option={'local'}
+        img={'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'}
+        title={'Local Multiplayer'}
+      />
 
-        <MenuCard
-          option={'computer'}
-          img={'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'}
-          title={'Versus Computer'}
-        />
-      </Row>
-    </div>
+      <MenuCard
+        option={'computer'}
+        img={'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'}
+        title={'Versus Computer'}
+      />
+    </Row>
   );
 }
 
