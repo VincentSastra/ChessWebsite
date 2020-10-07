@@ -7,11 +7,23 @@ import {Link} from 'react-router-dom';
 
 class ChessBoard extends Component {
   constructor(props) {
-    console.log(props.location.state.option);
-
     super(props);
 
-    this.ChessController = new ChessController(this.showVictoryScreen);
+    console.log(props.location.state);
+
+    if (props.location.state === undefined) {
+      props.location.state = {
+        computerOption: 'local',
+        playerColor: 'white',
+      };
+    }
+
+    this.ChessController = new ChessController({
+      afterVictoryCallback: this.showVictoryScreen,
+      computerOption: props.location.state.computerOption,
+      playerColor: props.location.state.playerColor,
+    });
+
     this.state = {
       Blocks: this.ChessController.Blocks,
     };

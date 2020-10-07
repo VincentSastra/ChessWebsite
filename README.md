@@ -15,7 +15,7 @@ ___
 - Rotate the board if player playing black
 - Recognize Checkmates
 - Try to use one single ChessBoard and keep the moves I did on stack
-  <br \>  Undo move after search tree end.
+  <br />  Undo move after search tree end.
 - Change from pieces eaten system to evaluate board system.
 
 ### Basic Functionality:

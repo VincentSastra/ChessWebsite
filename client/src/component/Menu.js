@@ -28,6 +28,69 @@ function MenuCard(props) {
   );
 }
 
+function ChoiceCard(props) {
+  return (
+    <div className="MenuCard">
+      <Card className="HideOnHover"
+        cover={
+          <img
+            alt={props.title}
+            src={props.img}
+          />
+        }
+      >
+        <Card.Meta
+          title={props.title}
+        />
+      </Card>
+
+      <div className="Underneath">
+        <Row className="Row">
+          <Link to={{
+            pathname: '/play',
+            state: {computerOption: props.computerOption,
+              playerColor: 'white'},
+          }}>
+            <Card className="Choice"
+              bordered={true}
+              cover={
+                <img
+                  alt={props.title}
+                  src={props.img}
+                />
+              }
+            >
+              <Card.Meta
+                title="Play as White"
+              />
+            </Card>
+          </Link>
+
+          <Link to={{
+            pathname: '/play',
+            state: {computerOption: props.computerOption,
+              playerColor: 'black'},
+          }}>
+            <Card className="Choice"
+              bordered={true}
+              cover={
+                <img
+                  alt={props.title}
+                  src={props.img}
+                />
+              }
+            >
+              <Card.Meta
+                title="Play as Black"
+              />
+            </Card>
+          </Link>
+        </Row>
+      </div>
+    </div>
+  );
+}
+
 function Menu() {
   return (
     <Row className="Centered">
@@ -37,8 +100,8 @@ function Menu() {
         title={'Local Multiplayer'}
       />
 
-      <MenuCard
-        option={'computer'}
+      <ChoiceCard
+        computerOption={'computer'}
         img={'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'}
         title={'Versus Computer'}
       />
