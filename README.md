@@ -11,7 +11,7 @@ ___
 
 ### Urgent Task:
 - Recognize promotion
-- Let player choose between playing white or black
+- Controller call the computer on versus computer mode
 - Rotate the board if player playing black
 - Recognize Checkmates
 - Try to use one single ChessBoard and keep the moves I did on stack
