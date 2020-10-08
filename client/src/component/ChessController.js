@@ -2,19 +2,26 @@ import {ChessLogic} from './ChessLogic';
 import {generateMoveMinMax} from './ChessComputer';
 
 class ChessController {
-  constructor(showVictoryScreen = () => {}) {
+  constructor({afterVictoryCallback = () => {},
+    computerOption = 'local', playerColor = 'white'}={}) {
+    console.log(computerOption);
+    console.log(playerColor);
+
+    this.getComputerMove = generateMoveMinMax;
+
     this.ChessLogic = new ChessLogic();
     this.Blocks = this.generateBlocks();
     this.turn = 'white';
-    this.socket = io('https://localhost:3000');
 
     this.emptyBlock = 'empty';
     this.selectedBlock = this.emptyBlock;
 
+    this.computerOption = computerOption;
+    this.playerColor = playerColor;
     this.moveList = [];
 
     this.aftermatch = false;
-    this.showVictoryScreen = showVictoryScreen;
+    this.showVictoryScreen = afterVictoryCallback;
   }
 
   handleClick(block) {
