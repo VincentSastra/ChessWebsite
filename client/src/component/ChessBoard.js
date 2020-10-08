@@ -34,7 +34,13 @@ class ChessBoard extends Component {
   handleClick(block) {
     this.ChessController.handleClick(block);
     this.forceUpdate();
+
+    setTimeout(() => {
+      this.ChessController.handleComputerTurn();
+      this.forceUpdate();
+    }, 1);
   }
+
 
   getImagePath(piece) {
     return ''.concat('pieceImages/', piece, '.png');

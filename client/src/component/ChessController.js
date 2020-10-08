@@ -1,5 +1,5 @@
 import {ChessLogic} from './ChessLogic';
-const io = require('socket.io-client');
+import {generateMoveMinMax} from './ChessComputer';
 
 class ChessController {
   constructor(showVictoryScreen = () => {}) {
@@ -18,6 +18,10 @@ class ChessController {
   }
 
   handleClick(block) {
+    if (this.turn !== this.playerColor && this.computerOption === 'computer') {
+      return;
+    }
+
     if (this.selectedBlock === 'empty' ||
       this.selectedBlock.getPiece() === 'empty') {
       if (this.turn === block.getColor()) {
@@ -27,14 +31,41 @@ class ChessController {
     } else if (this.movePiece(block)) {
       this.turn = (this.turn === 'white') ? 'black' : 'white';
 
-      this.moveList.push(
-        (this.moveList.length + 1) + '. \t' +
-        block.getPiece().substr(5) +
-        ' move to ' +
-        String.fromCharCode(block.col + 65) +
-        (block.row + 1));
+      this.recordMove(block.getPiece().substr(5), block.row, block.col);
+
+      this.checkWinner();
+    }
+  }
+
+  handleComputerTurn() {
+    if (this.turn === this.playerColor || this.computerOption !== 'computer') {
+      return;
     }
 
+    // Take the computer future move and map it to int array
+    const moveArr = generateMoveMinMax(this.ChessLogic, this.turn, 3)
+      .futureMove.split``.map((x)=>+x);
+
+    this.recordMove(this.ChessLogic.getPiece(moveArr[0], moveArr[1]),
+      moveArr[2], moveArr[3]);
+
+    this.ChessLogic.movePiece(moveArr[0], moveArr[1], moveArr[2], moveArr[3]);
+
+    this.turn = (this.turn === 'white') ? 'black' : 'white';
+
+    this.checkWinner();
+  }
+
+  recordMove(piece, destRow, destCol) {
+    this.moveList.push(
+      (this.moveList.length + 1) + '. \t' +
+      piece +
+      ' move to ' +
+      String.fromCharCode(destCol + 65) +
+      (destRow + 1));
+  }
+
+  checkWinner() {
     if (this.ChessLogic.getWinner() !== 'none' && !this.aftermatch) {
       this.aftermatch = true;
       this.showVictoryScreen(this.ChessLogic.getWinner());
