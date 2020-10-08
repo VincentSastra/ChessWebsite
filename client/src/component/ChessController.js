@@ -4,9 +4,6 @@ import {generateMoveMinMax} from './ChessComputer';
 class ChessController {
   constructor({afterVictoryCallback = () => {},
     computerOption = 'local', playerColor = 'white'}={}) {
-    console.log(computerOption);
-    console.log(playerColor);
-
     this.getComputerMove = generateMoveMinMax;
 
     this.ChessLogic = new ChessLogic();
