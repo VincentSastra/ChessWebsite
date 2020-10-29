@@ -43,7 +43,7 @@ class ChessBoard extends Component {
 
 
   getImagePath(piece) {
-    return ''.concat('pieceImages/', piece, '.png');
+    return ''.concat('/pieceImages/', piece, '.png');
   }
 
   showVictoryScreen(winner) {

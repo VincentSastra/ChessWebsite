@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require('express-session');
+// const session = require('express-session');
 const bodyParser = require('body-parser');
 
 const indexRouter = require('./routes');
@@ -14,20 +14,21 @@ const app = express();
 
 /**
  * Sessions and bodyParser for user authentication
- */
+
 const sessionSecret = require('./config/cookies');
 
 app.use(session({
   secret: sessionSecret.secret,
   cookie: {secure: true},
 }));
+ */
 
 app.use(bodyParser.urlencoded({extended: false}));
 
 /**
  * Configure Database
  * I am currently using AtlasDB which I will access through Mongoose
- */
+
 const mongoose = require('mongoose');
 const db = require('./config/keys').MongoURI;
 
@@ -38,7 +39,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 /**
  * Configure Passport
  * Passport is used for user login and authentication
- */
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -50,7 +51,7 @@ passport.use(new LocalStrategy(Account.authenticate()));
 
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
-
+ */
 /**
  * View engine setup and add all directory in views
  */

@@ -43,6 +43,7 @@
         2,
         2
       ],
+      "linebreak-style": ["error", "windows"],
       "new-cap": "off"
     },
     "env": {
