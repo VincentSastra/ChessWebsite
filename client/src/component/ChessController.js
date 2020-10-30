@@ -47,7 +47,7 @@ class ChessController {
     }
 
     // Take the computer future move and map it to int array
-    const moveArr = generateMoveMinMax(this.ChessLogic, this.turn, 4)
+    const moveArr = generateMoveMinMax(this.ChessLogic, this.turn, 3)
       .futureMove.split``.map((x)=>+x);
 
     this.recordMove(this.ChessLogic.getPiece(moveArr[0], moveArr[1]),
