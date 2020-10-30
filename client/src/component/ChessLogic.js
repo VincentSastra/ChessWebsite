@@ -1,9 +1,25 @@
 class ChessLogic {
   constructor(tileArr = emptyArr(), castle = 'KQkq', peasant = '') {
+    /** The Chessboard tile representation
+     *  This is an 8 by 8 array of TileInfo
+     *  TileInfo will have getter & setter for the tiles.
+     */
     this.Tiles = generateChessBoard(tileArr);
+
+    /** Castle is the current availability of castling stored as FEN notation
+     *  Passant contains the block where peasants can perform En Passant
+     */
     this.Castle = castle;
     this.Winner = 'none';
     this.Passant = peasant;
+  }
+
+  getTiles() {
+    return this.Tiles;
+  }
+
+  getTile(row, col) {
+    return this.Tiles[row][col];
   }
 
   getWinner() {
@@ -34,7 +50,6 @@ class ChessLogic {
         eaten = 'Pawn';
         this.Tiles[destRow][sourceCol].piece = 'empty';
       }
-      this.setPassant(sourceTile, destTile);
       this.handlePromotion(sourceTile, destTile, promoteTo);
       break;
     case ('King'):
@@ -45,7 +60,7 @@ class ChessLogic {
       this.disableCastle(sourceTile);
       break;
     }
-
+    this.setPassant(sourceTile, destTile);
     sourceTile.piece = 'empty';
 
     return eaten;
@@ -57,9 +72,12 @@ class ChessLogic {
   }
 
   setPassant(sourceTile, destTile) {
-    if (Math.abs(destTile.row - sourceTile.row) === 2) {
+    if (sourceTile.getPiece() === 'Pawn' &&
+      Math.abs(destTile.row - sourceTile.row) === 2) {
       const direction = sourceTile.getColor() === 'white' ? 1 : -1;
       this.Passant = '' + (sourceTile.row + direction) + sourceTile.col;
+    } else {
+      this.Passant = '';
     }
   }
 

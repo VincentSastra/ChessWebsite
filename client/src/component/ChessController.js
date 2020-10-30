@@ -109,7 +109,7 @@ class ChessController {
     for (let row = 0; row < 8; row++) {
       const Row = [];
       for (let col = 0; col < 8; col++) {
-        Row.push(new Block(row, col, this.ChessLogic.Tiles[row][col]));
+        Row.push(new Block(row, col, this.ChessLogic.getTile(row, col)));
       }
       blocks.push(Row);
     }
