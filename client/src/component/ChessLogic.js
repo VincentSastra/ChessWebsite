@@ -219,7 +219,12 @@ class ChessLogic {
     const direction = color === 'white' ? 1 : -1;
 
     for (let i = 1; i < distance; i++) {
-      const curTile = this.Tiles[row + i * direction][col];
+      const rowDestination = row + i * direction;
+      if (rowDestination > 7 || rowDestination < 0) {
+        break;
+      }
+
+      const curTile = this.Tiles[rowDestination][col];
 
       if (curTile.piece === 'empty') {
         this.pushToValid(row + i * direction, col, color, validMoves);

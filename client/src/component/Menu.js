@@ -56,7 +56,7 @@ function ChoiceCard(props) {
               cover={
                 <img
                   alt={props.title}
-                  src={props.img}
+                  src={'menu/white.jpg'}
                 />
               }
             >
@@ -76,7 +76,7 @@ function ChoiceCard(props) {
               cover={
                 <img
                   alt={props.title}
-                  src={props.img}
+                  src={'menu/black.jpg'}
                 />
               }
             >
@@ -96,13 +96,13 @@ function Menu() {
     <Row className="Centered">
       <MenuCard
         option={'local'}
-        img={'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'}
+        img={'menu/local.jpg'}
         title={'Local Multiplayer'}
       />
 
       <ChoiceCard
         computerOption={'computer'}
-        img={'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'}
+        img={'menu/computer.jpg'}
         title={'Versus Computer'}
       />
     </Row>
