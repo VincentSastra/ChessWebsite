@@ -46,7 +46,7 @@ function ChoiceCard(props) {
 
       <div className="Underneath">
         <Row className="Row">
-          <Link to={{
+          <Link className="Link" to={{
             pathname: '/play',
             state: {computerOption: props.computerOption,
               playerColor: 'white'},
@@ -66,7 +66,7 @@ function ChoiceCard(props) {
             </Card>
           </Link>
 
-          <Link to={{
+          <Link className="Link" to={{
             pathname: '/play',
             state: {computerOption: props.computerOption,
               playerColor: 'black'},
