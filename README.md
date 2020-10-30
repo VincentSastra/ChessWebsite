@@ -1,4 +1,6 @@
 # A Chess Website with React and Node.js
+## Hosted using Azure at
+[chess.vincentsastra.ca](http://chess.vincentsastra.ca/)
 
 ## Current Features:
 - React Chessboard
