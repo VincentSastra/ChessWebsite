@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.less';
 import './ChessBoard.less';
-import {Modal, Row, Card, List, Button} from 'antd';
+import {Modal, Card, List} from 'antd';
+import {Row, Col, Container, Button} from 'react-bootstrap';
 import ChessController from './ChessController';
 import {Link} from 'react-router-dom';
 
@@ -63,9 +64,9 @@ class ChessBoard extends Component {
       // Map each block row into an HTML row
       (blockRow) => {
         // Map each block' row's column into an individual HTML button
-        const rowContent = blockRow.map( (block) => {
+        const rowContent = blockRow.map((block) => {
           return (
-            <div
+            <Col
               key={block.col + block.row * 8}
               onClick={this.handleClick.bind(this, block)}
               className={block.type}>
@@ -77,7 +78,7 @@ class ChessBoard extends Component {
                   alt={block.getPiece()}
                 />}
 
-            </div>
+            </Col>
           );
         });
 
@@ -120,10 +121,10 @@ class ChessBoard extends Component {
     const menu = this.renderMenu();
 
     return (
-      <Row className="Centered">
+      <Container className="Centered">
         {board}
         {menu}
-      </Row>
+      </Container>
     );
   }
 }

@@ -3,6 +3,7 @@ import './App.less';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import ChessBoard from './component/ChessBoard';
 import Menu from './component/Menu';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
