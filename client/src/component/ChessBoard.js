@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.less';
 import './ChessBoard.less';
-import {Modal, Card, List} from 'antd';
-import {Row, Col, Container, Button} from 'react-bootstrap';
+import {Card, List} from 'antd';
+import {Row, Col, Container, Button, Modal} from 'react-bootstrap';
 import ChessController from './ChessController';
 import {Link} from 'react-router-dom';
 
@@ -19,6 +19,13 @@ class ChessBoard extends Component {
       };
     }
 
+    this.showVictoryScreen = (winner) => {
+      this.setState({
+        modalShow: true,
+        winner: winner,
+      });
+    };
+
     this.ChessController = new ChessController({
       afterVictoryCallback: this.showVictoryScreen,
       computerOption: props.location.state.computerOption,
@@ -27,6 +34,9 @@ class ChessBoard extends Component {
 
     this.state = {
       Blocks: this.ChessController.Blocks,
+      winner: 'White',
+      modalShow: false,
+      closeModal: () => this.setState({modalShow: false}),
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -45,18 +55,6 @@ class ChessBoard extends Component {
 
   getImagePath(piece) {
     return ''.concat('/pieceImages/', piece, '.png');
-  }
-
-  showVictoryScreen(winner) {
-    Modal.info({
-      title: winner + ' Wins!',
-      content: (
-        <div>
-          <p>Return to main menu for new game</p>
-        </div>
-      ),
-      onOk() {},
-    });
   }
 
   renderBoard() {
@@ -116,12 +114,35 @@ class ChessBoard extends Component {
     );
   }
 
+  renderVictoryModal() {
+    return (
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={this.state.modalShow}
+      >
+        <Modal.Body>
+          <h4>{this.state.winner} Wins!</h4>
+          <p>
+            Return to the main menu for a new game.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.state.closeModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
   render() {
     const board = this.renderBoard();
     const menu = this.renderMenu();
+    const victoryModal = this.renderVictoryModal();
 
     return (
       <Container className="Centered">
+        {victoryModal}
         {board}
         {menu}
       </Container>
