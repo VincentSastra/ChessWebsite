@@ -1,47 +1,35 @@
 // Use link and Hooks
 import React from 'react';
-import {Card, Row} from 'antd';
+import {Row, Col, Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './Menu.less';
 
 function MenuCard(props) {
   return (
-    <div className="MenuCard">
+    <Col className="MenuCard">
       <Link to={{
         pathname: '/play',
         state: {option: props.option},
-      }}>
-        <Card
-          cover={
-            <img
-              alt={props.title}
-              src={props.img}
-            />
-          }
-        >
-          <Card.Meta
-            title={props.title}
-          />
+      }} style={{textDecoration: 'inherit', color: 'inherit'}}>
+        <Card component>
+          <Card.Img variant="top" src={props.img} />
+          <Card.Body>
+            <Card.Title>{props.title}</Card.Title>
+          </Card.Body>
         </Card>
       </Link>
-    </div>
+    </Col>
   );
 }
 
 function ChoiceCard(props) {
   return (
-    <div className="MenuCard">
-      <Card className="HideOnHover"
-        cover={
-          <img
-            alt={props.title}
-            src={props.img}
-          />
-        }
-      >
-        <Card.Meta
-          title={props.title}
-        />
+    <Col className="MenuCard">
+      <Card>
+        <Card.Img variant="top" src={props.img} />
+        <Card.Body>
+          <Card.Title>{props.title}</Card.Title>
+        </Card.Body>
       </Card>
 
       <div className="Underneath">
@@ -50,19 +38,12 @@ function ChoiceCard(props) {
             pathname: '/play',
             state: {computerOption: props.computerOption,
               playerColor: 'white'},
-          }}>
-            <Card className="Choice"
-              bordered={true}
-              cover={
-                <img
-                  alt={props.title}
-                  src={'menu/white.jpg'}
-                />
-              }
-            >
-              <Card.Meta
-                title="Play as White"
-              />
+          }} style={{textDecoration: 'inherit', color: 'inherit'}}>
+            <Card className="Choice">
+              <Card.Img variant="top" src={'menu/white.jpg'} />
+              <Card.Body>
+                <Card.Title>Play as White'</Card.Title>
+              </Card.Body>
             </Card>
           </Link>
 
@@ -70,24 +51,17 @@ function ChoiceCard(props) {
             pathname: '/play',
             state: {computerOption: props.computerOption,
               playerColor: 'black'},
-          }}>
-            <Card className="Choice"
-              bordered={true}
-              cover={
-                <img
-                  alt={props.title}
-                  src={'menu/black.jpg'}
-                />
-              }
-            >
-              <Card.Meta
-                title="Play as Black"
-              />
+          }} style={{textDecoration: 'inherit', color: 'inherit'}}>
+            <Card className="Choice">
+              <Card.Img variant="top" src={'menu/black.jpg'} />
+              <Card.Body>
+                <Card.Title>'Play as Black'</Card.Title>
+              </Card.Body>
             </Card>
           </Link>
         </Row>
       </div>
-    </div>
+    </Col>
   );
 }
 
