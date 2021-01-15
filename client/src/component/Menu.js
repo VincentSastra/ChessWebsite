@@ -41,7 +41,7 @@ function ChoiceCard(props) {
             <Card className="Choice">
               <Card.Img variant="top" src={'menu/white.jpg'} />
               <Card.Body>
-                <Card.Title>Play as White'</Card.Title>
+                <Card.Title>Play as White</Card.Title>
               </Card.Body>
             </Card>
           </Link>
@@ -54,7 +54,7 @@ function ChoiceCard(props) {
             <Card className="Choice">
               <Card.Img variant="top" src={'menu/black.jpg'} />
               <Card.Body>
-                <Card.Title>'Play as Black'</Card.Title>
+                <Card.Title>Play as Black</Card.Title>
               </Card.Body>
             </Card>
           </Link>

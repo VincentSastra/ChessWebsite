@@ -2,13 +2,28 @@
     margin-left: 20px;
     background-color: lightgray;
     width: 250px;
-    height: 640px;
+    height: 800px;
 }
 
 .MoveList {
+    display: inline-flex;
+    overflow: auto;
     background-color: white;
     margin: 10px 10px;
     vertical-align: middle;
+    height: 750px;
+    scrollbar-width: none;
+}
+
+.MoveList::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+
+.MoveList::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 #MoveItem {

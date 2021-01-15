@@ -96,7 +96,7 @@ class ChessBoard extends Component {
           <Button block>Return to Main Menu</Button>
         </Link>
 
-        <ListGroup className="MoveList">
+        <ListGroup variant="flush" className="MoveList">
           {this.ChessController.moveList.map(
             (item) => {
               return (
