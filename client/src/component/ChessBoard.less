@@ -1,5 +1,5 @@
 @import "../App.less";
-@blockLength: 80px;
+@blockLength: 100px;
 
 .SideMenu {
     margin-left: 20px;
@@ -10,40 +10,17 @@
 
 .MoveList {
     background-color: white;
-    margin-top: 10px;
+    margin: 10px 10px;
     vertical-align: middle;
 }
 
-.ant-list-item {
-    height: 16px;
-}
-
-.ant-card-body {
-    max-height: 640px;
-}
-
-.ant-list-items {
-    overflow: auto;
-    max-height: 504px;
-    scrollbar-width: none;
-}
-
-.ant-list-items::-webkit-scrollbar {
-    width: 0;
-    background: transparent; /* make scrollbar transparent */
+#MoveItem {
+    padding: 5px 10px;
 }
 
 .SmallFont {
     font-size: 10px;
     margin: 0;
-}
-
-.LightBlock{
-    background-color: white;
-    border: none;
-    align-content: center;
-    width: @blockLength;
-    height: @blockLength;
 }
 
 .Square {
@@ -60,49 +37,41 @@
     justify-content: center;
 }
 
-.DarkBlock{
+#LightBlock, #DarkBlock, #HighlightBlock {
+    width: @blockLength;
+    height: @blockLength;
+
+    border: none;
+}
+
+#DarkBlock{
     background-color: black;
-    border: none;
-    align-content: center;
-    child-align: middle;
-    width: @blockLength;
-    height: @blockLength;
 }
 
-.LightBlock:active{
+#LightBlock:active{
     background-color: yellow;
-    border: none;
-    align-content: center;
-    width: @blockLength;
-    height: @blockLength;
 }
 
-.DarkBlock:active{
+#DarkBlock:active{
     background-color: yellow;
-    border: none;
-    align-content: center;
-    child-align: middle;
-    width: @blockLength;
-    height: @blockLength;
 }
 
-.HighlightBlock{
+#HighlightBlock{
     background-color: orange;
-    border: none;
-    align-content: center;
-    child-align: middle;
-    width: @blockLength;
-    height: @blockLength;
 }
 
-.LightBlockPiece{
-    -webkit-filter: drop-shadow(1px 1px 0 black)
-    drop-shadow(-1px -1px 0 black);
-    filter: drop-shadow(1px 1px 0 black)
-    drop-shadow(-1px -1px 0 black);
+#LightBlockPiece, #DarkBlockPiece, #HighlightBlockPiece {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.DarkBlockPiece{
+#LightBlockPiece{
+
+}
+
+#DarkBlockPiece{
     -webkit-filter: drop-shadow(1px 1px 0 white)
     drop-shadow(-1px -1px 0 white);
     filter: drop-shadow(1px 1px 0 white)

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import 'antd/dist/antd.less';
 import './ChessBoard.less';
-import {Card, List} from 'antd';
-import {Row, Col, Container, Button, Modal} from 'react-bootstrap';
+// eslint-disable-next-line max-len
+import {Row, Col, Container, Button, Modal, ListGroup, Card} from 'react-bootstrap';
 import ChessController from './ChessController';
 import {Link} from 'react-router-dom';
 
@@ -67,12 +66,12 @@ class ChessBoard extends Component {
             <Col
               key={block.col + block.row * 8}
               onClick={this.handleClick.bind(this, block)}
-              className={block.type}>
+              id={block.type}>
 
               {block.getPiece() === 'empty' ? null :
                 <img
                   src={this.getImagePath(block.getPiece())}
-                  className={block.type + 'Piece'}
+                  id={block.type + 'Piece'}
                   alt={block.getPiece()}
                 />}
 
@@ -98,18 +97,15 @@ class ChessBoard extends Component {
           <Button block>Return to Main Menu</Button>
         </Link>
 
-        <List
-          className="MoveList"
-          size="small"
-          bordered="true"
-          header={<div>Move List</div>}
-          dataSource={this.ChessController.moveList}
-          renderItem={(item) => (
-            <List.Item style={{marginBottom: '0px'}}>
-              <p className="SmallFont">{item}</p>
-            </List.Item>
+        <ListGroup className="MoveList">
+          {this.ChessController.moveList.map(
+            (item) => {
+              return (
+                <ListGroup.Item id="MoveItem">{item}</ListGroup.Item>
+              );
+            },
           )}
-        />
+        </ListGroup>
       </Card>
     );
   }
