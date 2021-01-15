@@ -1,8 +1,7 @@
-// Use link and Hooks
 import React from 'react';
 import {Row, Col, Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import './Menu.less';
+import './Menu.css';
 
 function MenuCard(props) {
   return (

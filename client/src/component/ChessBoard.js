@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import './ChessBoard.less';
-// eslint-disable-next-line max-len
+import './ChessBoard.css';
 import {Row, Col, Container, Button, Modal, ListGroup, Card} from 'react-bootstrap';
 import ChessController from './ChessController';
 import {Link} from 'react-router-dom';

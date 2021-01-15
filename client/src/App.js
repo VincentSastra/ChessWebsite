@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.less';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import ChessBoard from './component/ChessBoard';
 import Menu from './component/Menu';
