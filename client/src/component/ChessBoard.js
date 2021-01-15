@@ -114,6 +114,7 @@ class ChessBoard extends Component {
     );
   }
 
+  // TOOD: OnHide should have a better function
   renderVictoryModal() {
     return (
       <Modal
@@ -121,6 +122,7 @@ class ChessBoard extends Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={this.state.modalShow}
+        onHide={()=>{}}
       >
         <Modal.Body>
           <h4>{this.state.winner} Wins!</h4>
